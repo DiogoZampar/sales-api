@@ -1,4 +1,4 @@
-package br.com.diogozampar.service;
+package br.com.diogozampar.salesapi.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import br.com.diogozampar.dto.SellerDTO;
-import br.com.diogozampar.model.Seller;
-import br.com.diogozampar.repository.SellerRepository;
+import br.com.diogozampar.salesapi.dto.SellerDTO;
+import br.com.diogozampar.salesapi.model.Seller;
+import br.com.diogozampar.salesapi.repository.SellerRepository;
 
 @Service
 public class SellerService {

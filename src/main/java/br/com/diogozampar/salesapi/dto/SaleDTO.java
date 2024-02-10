@@ -1,4 +1,4 @@
-package br.com.diogozampar.dto;
+package br.com.diogozampar.salesapi.dto;
 
 import java.time.LocalDate;
 import java.util.UUID;
