@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.diogozampar.salesapi.dto.SellerDTO;
 import br.com.diogozampar.salesapi.dto.SellerRankingDTO;
+import br.com.diogozampar.salesapi.exception.DateInputException;
+import br.com.diogozampar.salesapi.exception.MissingEntityException;
+import br.com.diogozampar.salesapi.exception.UniqueEntityFieldViolationException;
 import br.com.diogozampar.salesapi.model.Seller;
 import br.com.diogozampar.salesapi.repository.SaleRepository;
 import br.com.diogozampar.salesapi.repository.SellerRepository;
@@ -31,23 +34,33 @@ public class SellerService {
         return sellerRepository.findAll();
     }
     
-    public Optional<Seller> getSellerById(UUID id){
-        return sellerRepository.findById(id);
+    public Seller getSellerById(UUID id){
+        Optional<Seller> optSeller = sellerRepository.findById(id);
+        if(optSeller.isPresent()){
+            return optSeller.get();
+        }else{
+            throw new MissingEntityException("Seller with ID:" + id + " could not be found.");
+        }
     }
 
     public Seller createSeller(SellerDTO sellerDTO){
+        if(sellerRepository.existsSellerByEmail(sellerDTO.email())) throw new UniqueEntityFieldViolationException("Email: " + sellerDTO.email() + " is already registered."); 
         return sellerRepository.save(new Seller(sellerDTO.name(), sellerDTO.email()));
     }
 
     public List<SellerRankingDTO> getSellerRankingListBetween(LocalDate starDate, LocalDate endDate){
+        if(starDate.isAfter(endDate)) throw new DateInputException("startDate must come before endDate.");
+        if(starDate.isAfter(LocalDate.now())) throw new DateInputException("startDate must be in the past.");
+        
         List<Seller> sellerList = sellerRepository.findAll();
         List<SellerRankingDTO> sellerRankingDTOList = new ArrayList<>();
 
+
         for (Seller seller : sellerList) {
-            Long totalSales = saleRepository.countBySellerIdAndSaleDateBetween(seller.getSellerId(), starDate, endDate);
+            Long totalSales = saleRepository.countBySellerSellerIdAndSaleDateBetween(seller.getSellerId(), starDate, endDate);
             Double averageSales = totalSales.doubleValue()/(ChronoUnit.DAYS.between(starDate, endDate));
             sellerRankingDTOList.add(
-                new SellerRankingDTO(seller.getSellerId(), totalSales, averageSales)
+                new SellerRankingDTO(seller.getName(), totalSales, averageSales)
             );
         }
 

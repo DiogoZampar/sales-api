@@ -8,5 +8,6 @@ import br.com.diogozampar.salesapi.model.Seller;
 
 
 public interface SellerRepository extends JpaRepository<Seller, UUID> {
-    
+    public boolean existsSellerByEmail(String email);
+
 }

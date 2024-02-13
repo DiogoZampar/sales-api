@@ -3,7 +3,6 @@ package br.com.diogozampar.salesapi.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.diogozampar.salesapi.dto.SellerDTO;
-import br.com.diogozampar.salesapi.model.Seller;
 import br.com.diogozampar.salesapi.service.SellerService;
 import jakarta.validation.Valid;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -34,7 +32,6 @@ public class SellerController {
     }
 
 
-
     @GetMapping
     public ResponseEntity<Object> getAllSellers() {
         return ResponseEntity
@@ -45,17 +42,11 @@ public class SellerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getSellerById(@PathVariable("id") @Valid UUID id){
-        Optional<Seller> opt = sellerService.getSellerById(id);
-        if(opt.isPresent()){
-            return ResponseEntity
-                .ok()
-                .body(opt.get());
-        }else{
-            return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(null);
-        }
+        return ResponseEntity
+            .ok()
+            .body(sellerService.getSellerById(id));
     }
+
 
     @PostMapping
     public ResponseEntity<Object> createSeller(@RequestBody @Valid SellerDTO sellerDTO){
@@ -63,8 +54,6 @@ public class SellerController {
             .status(HttpStatus.CREATED)
             .body(sellerService.createSeller(sellerDTO));
     }
-
-
 
 
     @GetMapping("/ranking")

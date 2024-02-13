@@ -1,9 +1,8 @@
 package br.com.diogozampar.salesapi.dto;
 
-import java.util.UUID;
 
 public record SellerRankingDTO(
-    UUID sellerID,
+    String sellerName,
     Long totalSales,
     Double averageDailySales
 ) {

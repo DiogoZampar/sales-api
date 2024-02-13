@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.diogozampar.salesapi.model.Sale;
 
 public interface SaleRepository extends JpaRepository<Sale, UUID> {
-    public Long countBySellerIdAndSaleDateBetween(UUID sellerId, LocalDate startDate, LocalDate endDate);
+    public Long countBySellerSellerIdAndSaleDateBetween(UUID sellerId, LocalDate startDate, LocalDate endDate);
 }
