@@ -7,7 +7,9 @@ import br.com.diogozampar.salesapi.model.Seller;
 import br.com.diogozampar.salesapi.service.SellerService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -62,5 +64,11 @@ public class SellerController {
     }
 
 
+
+
+    @GetMapping("/ranking")
+    public ResponseEntity<Object> getSellerRankingListBetween(@RequestParam("start") LocalDate starDate, @RequestParam("end") LocalDate endDate) {
+        return ResponseEntity.ok(sellerService.getSellerRankingListBetween(starDate, endDate));
+    }
 
 }

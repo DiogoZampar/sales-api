@@ -16,6 +16,7 @@ import br.com.diogozampar.salesapi.dto.SaleDTO;
 import br.com.diogozampar.salesapi.model.Sale;
 import br.com.diogozampar.salesapi.service.SaleService;
 
+
 @RestController
 @RequestMapping("/sale")
 public class SaleController {
@@ -55,4 +56,6 @@ public class SaleController {
             .status(HttpStatus.CREATED)
             .body(saleService.createSale(saleDTO));
     }
+
+
 }
