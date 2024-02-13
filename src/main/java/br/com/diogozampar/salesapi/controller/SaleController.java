@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.diogozampar.salesapi.dto.SaleDTO;
 import br.com.diogozampar.salesapi.model.Sale;
 import br.com.diogozampar.salesapi.service.SaleService;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -51,7 +52,7 @@ public class SaleController {
 
 
     @PostMapping
-    public ResponseEntity<Object> createSale(@RequestBody SaleDTO saleDTO){
+    public ResponseEntity<Object> createSale(@RequestBody @Valid SaleDTO saleDTO){
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(saleService.createSale(saleDTO));

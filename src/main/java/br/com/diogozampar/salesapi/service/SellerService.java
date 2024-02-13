@@ -15,6 +15,7 @@ import br.com.diogozampar.salesapi.model.Seller;
 import br.com.diogozampar.salesapi.repository.SaleRepository;
 import br.com.diogozampar.salesapi.repository.SellerRepository;
 
+
 @Service
 public class SellerService {
     

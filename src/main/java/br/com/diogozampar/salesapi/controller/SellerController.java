@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.diogozampar.salesapi.dto.SellerDTO;
 import br.com.diogozampar.salesapi.model.Seller;
 import br.com.diogozampar.salesapi.service.SellerService;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,7 +44,7 @@ public class SellerController {
     
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getSellerById(@PathVariable("id") UUID id){
+    public ResponseEntity<Object> getSellerById(@PathVariable("id") @Valid UUID id){
         Optional<Seller> opt = sellerService.getSellerById(id);
         if(opt.isPresent()){
             return ResponseEntity
@@ -57,7 +58,7 @@ public class SellerController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createSeller(@RequestBody SellerDTO sellerDTO){
+    public ResponseEntity<Object> createSeller(@RequestBody @Valid SellerDTO sellerDTO){
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(sellerService.createSeller(sellerDTO));

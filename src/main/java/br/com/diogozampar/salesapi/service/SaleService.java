@@ -1,5 +1,6 @@
 package br.com.diogozampar.salesapi.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class SaleService {
     }
     
     public Sale createSale(SaleDTO saleDTO){
-        return saleRepository.save(new Sale(saleDTO.saleDate(), saleDTO.totalCost(), saleDTO.sellerId(), saleDTO.sellerName()));
+        return saleRepository.save(new Sale(LocalDate.parse(saleDTO.saleDate()), saleDTO.totalCost(), UUID.fromString(saleDTO.sellerId()), saleDTO.sellerName()));
     }
 
 }
