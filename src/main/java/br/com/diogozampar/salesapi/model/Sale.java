@@ -1,5 +1,6 @@
 package br.com.diogozampar.salesapi.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -23,8 +24,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-public class Sale {
-
+public class Sale implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -39,7 +40,7 @@ public class Sale {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "seller_sellerId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties("email")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "email"})
     private Seller seller;
 
     public Sale(LocalDate saleDate, double totalCost, Seller seller){
